@@ -21,37 +21,37 @@ It configures the following:
 7. Create new custom port 2200 via aws firewall
 8. Change from default port 22 to 2200 (ensure you save): `sudo nano /etc/ssh/sshd_config`
 9. Configure uncomplicated firewall:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo ufw allow 2200/tcp`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo ufw allow 80/tcp`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo ufw allow 123/udp`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo ufw enable`
+`sudo ufw allow 2200/tcp`
+`sudo ufw allow 80/tcp`
+`sudo ufw allow 123/udp`
+`sudo ufw enable`
 10. Restart ssh service: `Sudo service ssh restart`
 11. Login via terminal with `ssh -i "yourdefaultkey".pem ubuntu@XX.XXX.XXX.XXX -p 2200`
 	
 **Give Grader Access**
 12. Create user *grader*: `sudo adduser grader`
 13. Create grader file in sudoers.d directory: `sudo nano /etc/sudoers.d/grader`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edit grader file by pasting: **added: grader ALL=(ALL) NOPASSWD:ALL** (this gives ability to sudo)
+edit grader file by pasting: **added: grader ALL=(ALL) NOPASSWD:ALL** (this gives ability to sudo)
 14. Create private and public keys locally with `ssh-keygen`
 15. Switch to grader account: `su - grader`
 16. Create and edit *authorized_keys file* in new .ssh directory: 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo mkdir .ssh`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo nano ssh/authorized_keys`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paste public key in authorized_keys file and save.
+`sudo mkdir .ssh`
+`sudo nano ssh/authorized_keys`
+paste public key in authorized_keys file and save.
 17. Restart ssh service: `Sudo service ssh restart` and log off.
 18. Log back in with: `ssh -i id_rsa grader@18.223.195.147 -p 2200`
 
 **Prepare to Deploy Your Project**
 19. Configure local time Zone to UTC: `sudo dpkg-reconfigure tzdata`
 20. Ensure the following in *sshd_config file* are set as below:`sudo nano /etc/ssh/sshd_config` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Changes PermitRootLogin to no
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PasswordAuthentication set to no
+Changes PermitRootLogin to no
+PasswordAuthentication set to no
 21. Install Apache Server: `sudo apt-get install apache2`
 22. Install python 3 mod_wsgi `sudo apt-get install libapache2-mod-wsgi-py3`
 23. Restart apache : `sudo service apache2 restart`
 24. Install python `sudo apt-get install python3.6` and others:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo apt-get install python-pip` (to get pip)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils requests 
+`sudo apt-get install python-pip` (to get pip)
+`sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils requests 
 Flask`
 25. Install psycopg2: `sudo apt-get -qqy install postgresql python-psycopg2`
 26. Check if no connections are allowed: `sudo vim /etc/postgresql/9.3/main/pg_hba.conf`
@@ -74,7 +74,7 @@ grant all privileges on database catalog to catalog;
 ```
 		\q
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`exit`
+`exit`
 
 		
 
@@ -87,7 +87,7 @@ grant all privileges on database catalog to catalog;
 38. Rename *main.py*: `sudo mv main.py __init__.py`(ensure its double underscore)
 39. Create *FlaskApp.conf* to configure virtual host:
 `sudo nano /etc/apache2/sites-available/FlaskApp.conf`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paste the following:
+Paste the following:
 ```
             <VirtualHost *:80>
 				ServerName 52.24.125.52
@@ -109,7 +109,7 @@ grant all privileges on database catalog to catalog;
 ```
 40. Enable the virtual host above: `sudo a2ensite FlaskApp`
 41. Create .wsgi file: `cd /var/www/FlaskApp && sudo nano flaskapp.wsgi`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add the following:
+Add the following:
 ```
 			#!/usr/bin/python
 			import sys
@@ -123,12 +123,13 @@ grant all privileges on database catalog to catalog;
 43. Restart Apache: `sudo service apache2 restart`
 42. Go to the following directory: `cd /var/www/FlaskApp/FlaskApp`
 43. Modify the *db_setup.py, populate_db.py and  _ init _.py files* as follows (do this for your files):
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From : `engine = create_engine('sqlite:///weightlifting.db')` 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To: `engine = create_engine('postgresql://catalog:udacity5@localhost/catalog')`
+From : `engine = create_engine('sqlite:///weightlifting.db')` 
+To: `engine = create_engine('postgresql://catalog:udacity5@localhost/catalog')`
 	44. Run the following in order (run your files):
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`python db_setup.py`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`python populate_db.py`
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`python __init__.py`	
+`python db_setup.py`
+`python populate_db.py`
+`python __init__.py`	
+
 ## References
 [Udacity](https://www.udacity.com/)
 [a2hosting](https://www.a2hosting.com/kb/getting-started-guide/accessing-your-account/disabling-ssh-logins-for-root)
