@@ -1,0 +1,38 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	
+	<div class="col-md-offset-1">
+		<!--Header-->
+		<h1>New Workout</h1>
+	</div>
+
+	<div class="col-md-5 col-md-offset-1">
+		<!--Creates form to create new workout-->
+		<form action="#" method = "POST">
+			<label for="name">Name:</label>
+			<input type ="text" maxlength="50" class="form-control" name="name"placeholder="Name of the workout" required>
+
+			<label for="description">Description:</label>
+			<textarea class="form-control" maxlength="250" rows="3" name="description" placeholder="Description of the workout" required></textarea>
+
+			<label for="difficulty">Difficulty:</label>
+			<label>
+				<input type="radio" name="difficulty" id="difficulty1" value="High" required>High
+			</label>
+					
+			<label>
+			<input type="radio" name="difficulty" id="difficulty2" value="Low" required>Low
+			</label>
+			
+			<div>		
+				<button>Save</button>
+			</div>
+		</form>
+	</div>
+	
+	<br>	
+{% include "footer.html" %}
+{% endblock %}
+

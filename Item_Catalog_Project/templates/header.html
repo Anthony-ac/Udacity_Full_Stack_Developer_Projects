@@ -1,0 +1,23 @@
+<html>
+	<div>
+		<!--Creates Banner-->
+		<div class= "col-md-offset-1">
+        		<img src="https://boydcounty.files.wordpress.com/2017/03/power-banner.jpg?w=840" width = "1415" height = "200">
+		</div>
+
+		<!--Redirect to bodyCategories function which directs to bodyCategories template-->
+		<div class="col-md-5 col-md-offset-1">
+			<a href="{{url_for('bodyCategories')}}">All Body Categories</a>
+		</div>	
+
+		<!Redirect to function showLogin or disconnect to either login or logout-->
+		<div class="col-md-2 col-md-offset-4">
+			{%if 'username' not in session %}
+				<a href="{{url_for('showLogin')}}"> Login </a>
+			{% else %}
+				<a href="{{url_for('disconnect')}}">Logout </a>
+			{% endif %}
+		
+		</div>
+	</div>
+</html>

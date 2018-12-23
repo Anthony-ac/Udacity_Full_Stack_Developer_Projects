@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+	<div class="col-md-offset-1">
+		<!--Header-->
+		<h1>Edit {{editedWorkout.name + " Workout"}}</h1>
+	</div>
+
+	<div>
+		<div class="col-md-5 col-md-offset-1">
+			<!--Creates form with button to take in changes to edit a workout-->
+			<form action="#" method = "post">
+				<div>
+					<label for="name">Name:</label>
+					<input type ="text" maxlength="100" class="form-control" name="name" value="{{editedWorkout.name }}" required>
+
+					<label for="description">Description:</label>
+					<textarea class="form-control" maxlength="250" rows="3" name="description" required>{{editedWorkout.description}}</textarea>
+
+					<label for="difficulty">Difficulty:</label>
+					<label>
+						<input type="radio" name="difficulty" id="difficulty1" value="High" required>High
+					</label>
+
+					<label>
+					    <input type="radio" name="difficulty" id="difficulty2" value="Low" required>Low
+					</label>
+				</div>
+
+				<a href = '{{url_for('bodyCategories')}}'>
+					<button>Save</button>
+				</a>
+				
+			</form>
+		</div>
+	</div>
+	<br>	
+{% include "footer.html" %}
+{% endblock %}

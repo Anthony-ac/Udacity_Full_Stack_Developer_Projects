@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+	<div>
+		<div class="col-md-offset-1">
+			<!--header-->
+			<h1>Edit: {{bodypart.name + " Body Category"}}</h1>
+		</div>
+	</div>
+
+	<div>
+		<div class="col-md-5 col-md-offset-1">
+			<!--form to take in change in name for body category with button to confirm-->
+			<form action="{{ url_for('editBodyCategory',body_part_id = bodypart.id)}}" method = "post">
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input type ="text" class="form-control" name="name" value="{{bodypart.name }}" required>
+					
+					<a href = '{{url_for('bodyCategories')}}'>
+						<button>Save</button>
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<br>	
+{% include "footer.html" %}
+{% endblock %}

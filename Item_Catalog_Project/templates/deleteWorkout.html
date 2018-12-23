@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	<div class="col-md-offset-1">
+		<!--Header asking to confirm deletion of workout-->
+		<h2> Are you sure you want to delete {{workoutToDelete.name}}? </h2>
+	</div>
+
+	<div class="col-md-offset-1">
+		<!Form and button to confirm deletion-->
+		<form action="#" method = 'post'>
+			<a href = '{{url_for('bodyCategories')}}'>
+				<button> Delete </button>
+			</a>
+		</form>
+	</div>
+
+	<br>	
+{% include "footer.html" %}
+{% endblock %}

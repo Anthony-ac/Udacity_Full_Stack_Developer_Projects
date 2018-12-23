@@ -1,0 +1,24 @@
+<html>
+	{% extends "main.html" %}
+	{% block content %}
+	{% include "header.html" %}
+
+		<div class="col-md-offset-1">
+			<!--Header-->
+			<h1>New Body Category</h1>
+		</div>
+
+		<div class= "col-md-5 col-md-offset-1">
+			<!--Creates form to create new body category-->
+			<form action="#" method = "POST">
+				<label for="name">Name:</label>
+				<input type ="text" class="form-control" maxlength="100" name="name" required>
+				<button>Create</button>
+			</form>
+		</div>
+	
+	{% endblock %}
+</html>
+
+	<br>	
+	{% include "footer.html" %}

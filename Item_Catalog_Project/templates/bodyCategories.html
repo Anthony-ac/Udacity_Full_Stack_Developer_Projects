@@ -1,0 +1,84 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+	<!--Creates and prints out flash message-->
+	<div col-md-offset-1>
+		{% with messages = get_flashed_messages() %}
+     			{% if messages %}
+          			<ul>
+        				{% for message in messages %}
+            					<li> <strong> {{ message }} </strong> </li>
+        				{% endfor %}
+        			</ul>
+        		{% endif %}
+   		{% endwith %}
+	</div>
+
+
+	<div>
+		<!--lists Title of main page-->
+		<div class="col-md-5 col-md-offset-1">
+			<h1>Body Categories to Workout</h1>
+
+			<!--Creates button to add new body Category if logged in-->
+			<div>
+				{% if loggedIn == True %}
+					<a href="{{url_for('newBodyCategory')}}">
+					<button>Add Body Category</button>
+					</a>
+				{% endif %}
+			</div>
+
+			<!--Lists out the body categories-->
+			<div class ="bodyCategories">
+				{% for bodypart in bodyparts %}
+					<ul>
+						<a href = "{{url_for('workouts', body_part_id = bodypart.id)}}">
+							<div class= "body-list">
+								<h3>{{bodypart.name}}</h3>
+							</div>	
+						</a>
+					</ul>
+				
+				<!--Shows Buttons if logged in-->
+				<div>
+					
+					{% if loggedIn == True %}
+						<a href="{{url_for('editBodyCategory', body_part_id = bodypart.id)}}">
+						<button>Edit Body Category</button>
+						</a>
+			
+						<a href="{{url_for('deleteBodyCategory', body_part_id = bodypart.id)}}">
+						<button>Delete Body Category</button>
+						</a>
+				
+					{% endif %}
+				</div>
+
+				{% endfor %}
+				<br>
+				<br>
+				<br>
+			</div>
+
+			</div>
+
+		<!--Lists any changes to the body categories-->
+		<div class="col-md-4 col-md-offset-2">
+			<h2>Latest Body Category Changes</h2>
+			{% for bodyCategoryChange in bodyCategoryChanges %}
+				<strong>{{bodyCategoryChange}}</strong>
+				<br>
+				<br>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div>
+		<br>
+		{% include "footer.html" %}
+	</div>
+
+{% endblock %}

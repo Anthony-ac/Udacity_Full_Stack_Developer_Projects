@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	<div class="col-md-offset-1">
+		<!--Header asking if deletion of body category is wanted-->
+		<h2> Are you sure you want to delete {{bodypart.name}}? </h2>
+	</div>
+
+	<div class="col-md-offset-1">
+		<!--Form with button to confirm deletion-->
+		<form action="#" method = 'post'>
+			<a href = '{{url_for('bodyCategories')}}'>
+			<button>Delete</button>
+			</a>
+		</form>
+	</div>
+	<br>	
+{% include "footer.html" %}
+{% endblock %}
